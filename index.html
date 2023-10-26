@@ -523,15 +523,219 @@ href="https://gist.github.com/biomystery/67884d5d010966bc6a5d">https://gist.gith
 </div>
 <div id="gráfico-de-violín" class="section level1">
 <h1>Gráfico de Violín</h1>
+<p>Se utiliza la libreria <strong>library(ggplot2)</strong> y
+<strong>library(dplyr)</strong>.</p>
+<pre class="r watch-out"><code>library(ggplot2)
+library(dplyr)</code></pre>
+<div id="para-una-sola-variable" class="section level2">
+<h2>Para una sola variable</h2>
+<p>Para una sola variable numérica (y = VariableNumerica) y para la
+variable x se pone una sola categoria como “Categoria1” (x =
+“Categoria1”).<br />
+X puede ser cualquier valor.<br />
+</p>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = &quot;Categoria1&quot;, y = Sepal.Length)
+  ) +
+  geom_violin()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" width="400px" /></p>
+<p>Ahora si queremos girarlo utilizamos <em>coord_flip()</em></p>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = &quot;Categoria1&quot;, y = Sepal.Length)
+  ) +
+  geom_violin() +
+  coord_flip()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" width="400px" /></p>
+</div>
+<div id="patra-varios-grupos" class="section level2">
+<h2>Patra varios grupos</h2>
+<p>De donde:</p>
+<ul>
+<li>x, fill = VariableCategorias</li>
+<li>y = VariabeNumérica</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, fill = Species)
+  ) +
+  geom_violin()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-18-1.png" width="400px" /></p>
+</div>
+<div id="agregando-otros-elementos" class="section level2">
+<h2>Agregando otros elementos</h2>
+<ul>
+<li>geom_boxplot( width = .2) : Agregar diagrama de cajas y ajustar su
+ancho para que encaje dentro del violín</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, fill = Species)
+  ) +
+  geom_violin() +
+  geom_boxplot(width = .2)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-19-1.png" width="400px" /></p>
 <p><br />
 <br />
 </p>
 </div>
+</div>
 <div id="gráfico-ridgeline-cresta" class="section level1">
 <h1>Gráfico Ridgeline (Cresta)</h1>
+<p>Se utiliza la libreria <strong>library(ggridges)</strong><br />
+</p>
+<p>Se emplea la función: <em>geom_density_ridges()</em><br />
+</p>
+<p>Más información:<br />
+</p>
+<ul>
+<li><a
+href="https://rpubs.com/aafernandez1976/ridgelines">https://rpubs.com/aafernandez1976/ridgelines</a></li>
+<li><a
+href="https://www.data-to-viz.com/graph/ridgeline.html">https://www.data-to-viz.com/graph/ridgeline.html</a></li>
+<li><a
+href="https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/">https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/</a></li>
+<li><a
+href="https://blog.revolutionanalytics.com/2017/07/joyplots.html">https://blog.revolutionanalytics.com/2017/07/joyplots.html</a></li>
+<li><a
+href="https://clauswilke.com/dataviz/boxplots-violins.html">https://clauswilke.com/dataviz/boxplots-violins.html</a></li>
+<li><a
+href="https://clauswilke.com/blog/2017/09/15/goodbye-joyplots/">https://clauswilke.com/blog/2017/09/15/goodbye-joyplots/</a></li>
+<li><a
+href="https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html#:~:text=Ridgeline%20plots%20are%20partially%20overlapping,distributions%20over%20time%20or%20space">https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html#:~:text=Ridgeline%20plots%20are%20partially%20overlapping,distributions%20over%20time%20or%20space</a></li>
+<li><a
+href="https://clauswilke.com/dataviz/boxplots-violins.html#boxplots-violins-vertical">https://clauswilke.com/dataviz/boxplots-violins.html#boxplots-violins-vertical</a></li>
+<li><a
+href="https://en.wikipedia.org/wiki/Ridgeline_plot">https://en.wikipedia.org/wiki/Ridgeline_plot</a></li>
+</ul>
+<pre class="r watch-out"><code>library(ggridges)</code></pre>
+<div id="para-un-solo-grupo" class="section level2">
+<h2>Para un solo grupo</h2>
+<ul>
+<li>X = VariableNumérica</li>
+<li>y = “Categoria1” (Poner el nombre de la categoria)</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(data = .,
+         mapping = aes(y = &quot;1&quot;, x = Sepal.Length)
+         ) +
+  geom_density_ridges()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" width="400px" /></p>
+</div>
+<div id="para-varios-grupos" class="section level2">
+<h2>Para varios grupos</h2>
+<ul>
+<li>x = VariableNumérica</li>
+<li>y, fill = VariableCategorias</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" width="400px" /></p>
+</div>
+<div id="agregando-otros-elementos-1" class="section level2">
+<h2>Agregando otros elementos</h2>
+<ul>
+<li>geom_density_ridges:
+<ul>
+<li>scale = 0.9 : Para reducir el tamaño de las distribuciones y evitar
+que se superpongan</li>
+<li>stat = “binline” : Para ponerlo en forma de barras</li>
+<li>alpha = 0.25 : Para la transparencia de los colores</li>
+</ul></li>
+<li>scale_fill_manual: Para agregar los colores a cada categoria</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9, alpha = 0.25) +
+  scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-23-1.png" width="400px" /></p>
+<ul>
+<li>jittered_points = TRUE : Agregar puntos a la distribución</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9, alpha = 0.25, jittered_points = TRUE) +
+  scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-24-1.png" width="400px" /></p>
+<ul>
+<li>quantile_lines = TRUE: Para mostrar los cuantiles</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9, quantile_lines = TRUE) +
+  scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-25-1.png" width="400px" /></p>
+<ul>
+<li>facet_wrap(~Species): Para verlo por separado cada distribución</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9) +
+  scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;)) + 
+  facet_wrap(~Species)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-26-1.png" width="400px" /></p>
+<ul>
+<li>theme_ridges(): Para darle un formato por defecto al gráfico</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9) +
+  scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;)) +
+  theme_ridges()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-27-1.png" width="400px" /></p>
+<ul>
+<li>theme_ridges(grid = FALSE): Para darle un formato por defecto al
+gráfico y quitarle las franjas</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9) +
+  scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;)) +
+  theme_ridges(grid = FALSE)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-28-1.png" width="400px" /></p>
+<ul>
+<li>theme_bw(): Para darle un formato por defecto al gráfico</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9) +
+  scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;)) +
+  theme_bw()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-29-1.png" width="400px" /></p>
 <p><br />
 <br />
 </p>
+</div>
 </div>
 <div id="gráfico-qq-plot" class="section level1">
 <h1>Gráfico QQ Plot</h1>

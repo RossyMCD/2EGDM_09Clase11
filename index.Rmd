@@ -256,7 +256,76 @@ show_col(heat.colors(5))
 
 # Gráfico de Violín
 
+Se utiliza la libreria **library(ggplot2)** y **library(dplyr)**.
 
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+
+
+## Para una sola variable
+
+Para una sola variable numérica (y = VariableNumerica) y para la variable x se pone una sola categoria como "Categoria1" (x = "Categoria1").\
+X puede ser cualquier valor.\
+
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = "Categoria1", y = Sepal.Length)
+  ) +
+  geom_violin()
+```
+
+Ahora si queremos girarlo utilizamos *coord_flip()*
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = "Categoria1", y = Sepal.Length)
+  ) +
+  geom_violin() +
+  coord_flip()
+```
+
+
+## Patra varios grupos
+
+De donde:
+
+* x, fill = VariableCategorias
+* y = VariabeNumérica
+
+
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, fill = Species)
+  ) +
+  geom_violin()
+
+```
+
+
+## Agregando otros elementos
+
+* geom_boxplot( width = .2) : Agregar diagrama de cajas y ajustar su ancho para que encaje dentro del violín
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, fill = Species)
+  ) +
+  geom_violin() +
+  geom_boxplot(width = .2)
+```
 
 
 \
@@ -264,8 +333,150 @@ show_col(heat.colors(5))
 
 # Gráfico Ridgeline (Cresta)
 
+Se utiliza la libreria **library(ggridges)**\
+
+Se emplea la función: *geom_density_ridges()*\
+
+Más información:\
+
+* [https://rpubs.com/aafernandez1976/ridgelines](https://rpubs.com/aafernandez1976/ridgelines)
+* [https://www.data-to-viz.com/graph/ridgeline.html](https://www.data-to-viz.com/graph/ridgeline.html)
+* [https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/](https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/)
+* [https://blog.revolutionanalytics.com/2017/07/joyplots.html](https://blog.revolutionanalytics.com/2017/07/joyplots.html)
+* [https://clauswilke.com/dataviz/boxplots-violins.html](https://clauswilke.com/dataviz/boxplots-violins.html)
+* [https://clauswilke.com/blog/2017/09/15/goodbye-joyplots/](https://clauswilke.com/blog/2017/09/15/goodbye-joyplots/)
+* [https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html#:~:text=Ridgeline%20plots%20are%20partially%20overlapping,distributions%20over%20time%20or%20space](https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html#:~:text=Ridgeline%20plots%20are%20partially%20overlapping,distributions%20over%20time%20or%20space)
+* [https://clauswilke.com/dataviz/boxplots-violins.html#boxplots-violins-vertical](https://clauswilke.com/dataviz/boxplots-violins.html#boxplots-violins-vertical)
+* [https://en.wikipedia.org/wiki/Ridgeline_plot](https://en.wikipedia.org/wiki/Ridgeline_plot)
+
+```{r}
+library(ggridges)
+```
 
 
+## Para un solo grupo
+
+* X = VariableNumérica
+* y = "Categoria1" (Poner el nombre de la categoria)
+
+```{r}
+iris %>% 
+  ggplot(data = .,
+         mapping = aes(y = "1", x = Sepal.Length)
+         ) +
+  geom_density_ridges()
+```
+
+## Para varios grupos
+
+* x = VariableNumérica
+* y, fill = VariableCategorias
+
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges()
+```
+
+
+## Agregando otros elementos
+
+* geom_density_ridges:
+  + scale = 0.9 : Para reducir el tamaño de las distribuciones y evitar que se superpongan
+  + stat = "binline" : Para ponerlo en forma de barras
+  + alpha = 0.25 : Para la transparencia de los colores
+  
+* scale_fill_manual: Para agregar los colores a cada categoria
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9, alpha = 0.25) +
+  scale_fill_manual(values = c("red", "orange", "green"))
+```
+  
+* jittered_points = TRUE : Agregar puntos a la distribución
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9, alpha = 0.25, jittered_points = TRUE) +
+  scale_fill_manual(values = c("red", "orange", "green"))
+```
+
+* quantile_lines = TRUE: Para mostrar los cuantiles
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9, quantile_lines = TRUE) +
+  scale_fill_manual(values = c("red", "orange", "green"))
+```
+
+* facet_wrap(~Species): Para verlo por separado cada distribución
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9) +
+  scale_fill_manual(values = c("red", "orange", "green")) + 
+  facet_wrap(~Species)
+```
+
+* theme_ridges(): Para darle un formato por defecto al gráfico
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9) +
+  scale_fill_manual(values = c("red", "orange", "green")) +
+  theme_ridges()
+```
+
+* theme_ridges(grid = FALSE): Para darle un formato por defecto al gráfico y quitarle las franjas
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9) +
+  scale_fill_manual(values = c("red", "orange", "green")) +
+  theme_ridges(grid = FALSE)
+```
+
+* theme_bw(): Para darle un formato por defecto al gráfico
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9) +
+  scale_fill_manual(values = c("red", "orange", "green")) +
+  theme_bw()
+```
 
 
 \
