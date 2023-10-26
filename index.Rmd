@@ -1,0 +1,277 @@
+---
+title: "9ClaseGraficoMultivariado"
+author: "Rossy"
+date: "2023-10-25"
+output:
+  html_document:
+    theme: flatly
+    self_contained: false
+    number_sections: false
+    fig_caption: true
+    toc: true
+    toc_float: true
+---
+
+
+<!-- ```{css, echo=FALSE} -->
+<!-- .watch-out { -->
+<!--   background-color: lightpink; -->
+<!--   border: 3px solid red; -->
+<!--   font-weight: bold; -->
+<!--   font-size: 12px; -->
+<!-- } -->
+<!-- ``` -->
+
+
+```{css, echo=FALSE}
+.watch-out {
+  font-size: 12px;
+}
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, class.source = "watch-out", out.width = "400px")
+```
+
+
+
+
+```{r include=FALSE}
+library(dplyr)
+```
+
+
+# Paletas de Colores (8)
+
+Se ha visto 8 tipos:\
+
+1. Colores disponibles en R (657)
+2. Código Hexadecimales
+3. RColorBrewer
+4. Viridis
+5. Pal_jco
+6. WesAnderson
+7. Paletas disponibles
+
+
+OBS:
+
+- Para mostrar los colores, vamos a utlizar *show_col()* de la libreria **library(scales)**
+
+\
+\
+
+## <span style = "background-color: #FFFF00">Colores disponibles en R (657)</span>
+
+Son colores ya existentes en R y para utilizarlos, solo debemos escribir su nombre.
+
+
+```{r}
+library(scales)
+
+colors() %>% 
+  head(21)
+
+show_col(c("aquamarine", "red", "beige"))
+```
+
+\
+\
+
+## <span style = "background-color: #FFFF00">Código Hexadecimales</span>
+
+Son aquellos códigos que empiezan con **#** (Ex. "#ffb90f")\
+
+Se encuentra disponibles en diversas páginas de google, como: [https://www.color-hex.com/](https://www.color-hex.com/)\
+
+```{r}
+Lista1 <- c("#ffb90f", "#0DBBBF", "#ea847b")
+
+show_col(Lista1)
+```
+
+
+\
+\
+
+## <span style = "background-color: #FFFF00">RColorBrewer</span>
+
+Son combinaciones de colores ya agrupadas y listas para utilizar.\
+La libreria a usar: **library(RColorBrewer)**\
+
+Más información en:
+
+* [https://www.geeksforgeeks.org/introduction-to-color-palettes-in-r-with-rcolorbrewer/](https://www.geeksforgeeks.org/introduction-to-color-palettes-in-r-with-rcolorbrewer/)
+* [https://r-graph-gallery.com/38-rcolorbrewers-palettes.html](https://r-graph-gallery.com/38-rcolorbrewers-palettes.html)
+
+
+Para mostrar todos los colores disponibles:
+
+```{r class.source="watch-out"}
+library(RColorBrewer)
+brewer.pal.info
+```
+
+Para selecionar uno en particular: (Nos devuelve códigos Hexadecimales)\
+
+
+```{r style="color: red;"}
+brewer.pal(n = 3, name = "Dark2")
+```
+
+
+Para visualizar los colores:
+
+
+```{r out.width = "400px"}
+show_col(brewer.pal(n = 3, name = "Dark2"))
+```
+
+\
+\
+
+## <span style = "background-color: #FFFF00">Viridis</span>
+
+Utiliza la libreria **library(viridis)**.\
+
+Dentro de la libreria, hay 4 paletas:
+
+* magma ("A")
+* inferno ("B")
+* plasma ("C")
+* viridis ("D")
+* cividis ("E)
+* rocket ("F")
+* mako ("G")
+* turbo ("H")
+\
+
+Nos devuelve códigos Hexadecimales.\
+
+
+Más información:
+
+* [https://www.thinkingondata.com/something-about-viridis-library/](https://www.thinkingondata.com/something-about-viridis-library/)
+* [https://search.r-project.org/CRAN/refmans/viridisLite/html/viridis.html](https://search.r-project.org/CRAN/refmans/viridisLite/html/viridis.html)
+\
+
+Para escoger una paleta en particular y la cantidad de colores que queremos:\
+
+```{r}
+library(viridis)
+viridis(10, option = "mako")
+```
+
+O también lo podemos llamar por letra de alfabeto correspondiente:\
+
+```{r}
+viridis(10, option = "G")
+show_col(viridis(10, option = "G"))
+```
+
+\
+\
+
+## <span style = "background-color: #FFFF00">Pal_jco</span>
+
+Utiliza la libreria **library(ggsci)** y la función *pal_jco()*.\
+Hace referencia a: Journal of Clinical Oncology Color Palettes.\
+
+Solo tiene una paleta de color disponible: *default*\
+Solo tiene **10** colores disponibles\
+
+
+```{r}
+library(ggsci)
+pal_jco(palette = c("default"))(10)
+show_col(pal_jco(palette = c("default"))(10))
+show_col(pal_jco(palette = c("default"))(30))
+```
+
+\
+\
+
+## <span style = "background-color: #FFFF00">WesAnderson</span>
+
+Utiliza la libreria **library(wesanderson)**\
+Obtener los nombres de las paletas: **names()**.\
+
+Se tiene que revisar la cantidad de colores, por cada paleta, ya que difieren.\
+Si queremos utilizar más del límite, debemos utilizar la opción: *type = c("continuous)*\
+
+Más información: 
+
+* [https://github.com/karthik/wesanderson](https://github.com/karthik/wesanderson)
+* [https://rforpoliticalscience.com/2020/07/26/make-wes-anderson-themed-graphs-with-wesanderson-package-in-r/](https://rforpoliticalscience.com/2020/07/26/make-wes-anderson-themed-graphs-with-wesanderson-package-in-r/)
+
+```{r}
+library(wesanderson)
+names(wes_palettes)
+```
+
+Seleccionando una paleta en general:
+
+```{r}
+wes_palette("GrandBudapest1", n = 4)
+wes_palette("GrandBudapest1", n = 10, type = c("continuous"))
+```
+
+\
+\
+
+## <span style = "background-color: #FFFF00">Paletas disponibles</span>
+
+Paleta de colores disponibles en R (*R base color palettes*).\
+Solo tiene disponible 5 paletas:\
+
+* rainbow()
+* heat.colors()
+* terrain.colors()
+* topo.colors()
+* cm.colors()
+
+Cada paleta solo tiene 5 colores disponibles.\
+
+Más información:\
+
+* [https://www.datanovia.com/en/blog/top-r-color-palettes-to-know-for-great-data-visualization/#:~:text=There%20are%205%20R%20base,cm.colors(n)%20.](https://www.datanovia.com/en/blog/top-r-color-palettes-to-know-for-great-data-visualization/#:~:text=There%20are%205%20R%20base,cm.colors(n)%20.)
+* [https://gist.github.com/biomystery/67884d5d010966bc6a5d](https://gist.github.com/biomystery/67884d5d010966bc6a5d)
+
+```{r}
+rainbow(5)
+heat.colors(5)
+```
+
+Visualizando los colores
+
+```{r}
+show_col(rainbow(5))
+show_col(heat.colors(5))
+```
+
+
+\
+\
+
+# Gráfico de Violín
+
+
+
+
+\
+\
+
+# Gráfico Ridgeline (Cresta)
+
+
+
+
+
+\
+\
+
+# Gráfico QQ Plot
+
+
+

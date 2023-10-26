@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Rossy" />
+
+<meta name="date" content="2023-10-25" />
+
+<title>9ClaseGraficoMultivariado</title>
+
+<script src="index_files/header-attrs-2.11/header-attrs.js"></script>
+<script src="index_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="index_files/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="index_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="index_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="index_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="index_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="index_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="index_files/navigation-1.1/tabsets.js"></script>
+<link href="index_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="index_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">9ClaseGraficoMultivariado</h1>
+<h4 class="author">Rossy</h4>
+<h4 class="date">2023-10-25</h4>
+
+</div>
+
+
+<!-- ```{css, echo=FALSE} -->
+<!-- .watch-out { -->
+<!--   background-color: lightpink; -->
+<!--   border: 3px solid red; -->
+<!--   font-weight: bold; -->
+<!--   font-size: 12px; -->
+<!-- } -->
+<!-- ``` -->
+<style type="text/css">
+.watch-out {
+  font-size: 12px;
+}
+</style>
+<div id="paletas-de-colores-8" class="section level1">
+<h1>Paletas de Colores (8)</h1>
+<p>Se ha visto 8 tipos:<br />
+</p>
+<ol style="list-style-type: decimal">
+<li>Colores disponibles en R (657)</li>
+<li>Código Hexadecimales</li>
+<li>RColorBrewer</li>
+<li>Viridis</li>
+<li>Pal_jco</li>
+<li>WesAnderson</li>
+<li>Paletas disponibles</li>
+</ol>
+<p>OBS:</p>
+<ul>
+<li>Para mostrar los colores, vamos a utlizar <em>show_col()</em> de la
+libreria <strong>library(scales)</strong></li>
+</ul>
+<p><br />
+<br />
+</p>
+<div id="colores-disponibles-en-r-657" class="section level2">
+<h2><span style="background-color: #FFFF00">Colores disponibles en R
+(657)</span></h2>
+<p>Son colores ya existentes en R y para utilizarlos, solo debemos
+escribir su nombre.</p>
+<pre class="r watch-out"><code>library(scales)
+
+colors() %&gt;% 
+  head(21)</code></pre>
+<pre><code>##  [1] &quot;white&quot;         &quot;aliceblue&quot;     &quot;antiquewhite&quot;  &quot;antiquewhite1&quot;
+##  [5] &quot;antiquewhite2&quot; &quot;antiquewhite3&quot; &quot;antiquewhite4&quot; &quot;aquamarine&quot;   
+##  [9] &quot;aquamarine1&quot;   &quot;aquamarine2&quot;   &quot;aquamarine3&quot;   &quot;aquamarine4&quot;  
+## [13] &quot;azure&quot;         &quot;azure1&quot;        &quot;azure2&quot;        &quot;azure3&quot;       
+## [17] &quot;azure4&quot;        &quot;beige&quot;         &quot;bisque&quot;        &quot;bisque1&quot;      
+## [21] &quot;bisque2&quot;</code></pre>
+<pre class="r watch-out"><code>show_col(c(&quot;aquamarine&quot;, &quot;red&quot;, &quot;beige&quot;))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" width="400px" /></p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="código-hexadecimales" class="section level2">
+<h2><span style="background-color: #FFFF00">Código
+Hexadecimales</span></h2>
+<p>Son aquellos códigos que empiezan con <strong>#</strong> (Ex.
+“#ffb90f”)<br />
+</p>
+<p>Se encuentra disponibles en diversas páginas de google, como: <a
+href="https://www.color-hex.com/">https://www.color-hex.com/</a><br />
+</p>
+<pre class="r watch-out"><code>Lista1 &lt;- c(&quot;#ffb90f&quot;, &quot;#0DBBBF&quot;, &quot;#ea847b&quot;)
+
+show_col(Lista1)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="400px" /></p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="rcolorbrewer" class="section level2">
+<h2><span style="background-color: #FFFF00">RColorBrewer</span></h2>
+<p>Son combinaciones de colores ya agrupadas y listas para
+utilizar.<br />
+La libreria a usar: <strong>library(RColorBrewer)</strong><br />
+</p>
+<p>Más información en:</p>
+<ul>
+<li><a
+href="https://www.geeksforgeeks.org/introduction-to-color-palettes-in-r-with-rcolorbrewer/">https://www.geeksforgeeks.org/introduction-to-color-palettes-in-r-with-rcolorbrewer/</a></li>
+<li><a
+href="https://r-graph-gallery.com/38-rcolorbrewers-palettes.html">https://r-graph-gallery.com/38-rcolorbrewers-palettes.html</a></li>
+</ul>
+<p>Para mostrar todos los colores disponibles:</p>
+<pre class="r watch-out"><code>library(RColorBrewer)
+brewer.pal.info</code></pre>
+<pre><code>##          maxcolors category colorblind
+## BrBG            11      div       TRUE
+## PiYG            11      div       TRUE
+## PRGn            11      div       TRUE
+## PuOr            11      div       TRUE
+## RdBu            11      div       TRUE
+## RdGy            11      div      FALSE
+## RdYlBu          11      div       TRUE
+## RdYlGn          11      div      FALSE
+## Spectral        11      div      FALSE
+## Accent           8     qual      FALSE
+## Dark2            8     qual       TRUE
+## Paired          12     qual       TRUE
+## Pastel1          9     qual      FALSE
+## Pastel2          8     qual      FALSE
+## Set1             9     qual      FALSE
+## Set2             8     qual       TRUE
+## Set3            12     qual      FALSE
+## Blues            9      seq       TRUE
+## BuGn             9      seq       TRUE
+## BuPu             9      seq       TRUE
+## GnBu             9      seq       TRUE
+## Greens           9      seq       TRUE
+## Greys            9      seq       TRUE
+## Oranges          9      seq       TRUE
+## OrRd             9      seq       TRUE
+## PuBu             9      seq       TRUE
+## PuBuGn           9      seq       TRUE
+## PuRd             9      seq       TRUE
+## Purples          9      seq       TRUE
+## RdPu             9      seq       TRUE
+## Reds             9      seq       TRUE
+## YlGn             9      seq       TRUE
+## YlGnBu           9      seq       TRUE
+## YlOrBr           9      seq       TRUE
+## YlOrRd           9      seq       TRUE</code></pre>
+<p>Para selecionar uno en particular: (Nos devuelve códigos
+Hexadecimales)<br />
+</p>
+<pre class="r watch-out"><code>brewer.pal(n = 3, name = &quot;Dark2&quot;)</code></pre>
+<pre><code>## [1] &quot;#1B9E77&quot; &quot;#D95F02&quot; &quot;#7570B3&quot;</code></pre>
+<p>Para visualizar los colores:</p>
+<pre class="r watch-out"><code>show_col(brewer.pal(n = 3, name = &quot;Dark2&quot;))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="400px" /></p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="viridis" class="section level2">
+<h2><span style="background-color: #FFFF00">Viridis</span></h2>
+<p>Utiliza la libreria <strong>library(viridis)</strong>.<br />
+</p>
+<p>Dentro de la libreria, hay 4 paletas:</p>
+<ul>
+<li>magma (“A”)</li>
+<li>inferno (“B”)</li>
+<li>plasma (“C”)</li>
+<li>viridis (“D”)</li>
+<li>cividis (“E)</li>
+<li>rocket (“F”)</li>
+<li>mako (“G”)</li>
+<li>turbo (“H”)<br />
+</li>
+</ul>
+<p>Nos devuelve códigos Hexadecimales.<br />
+</p>
+<p>Más información:</p>
+<ul>
+<li><a
+href="https://www.thinkingondata.com/something-about-viridis-library/">https://www.thinkingondata.com/something-about-viridis-library/</a></li>
+<li><a
+href="https://search.r-project.org/CRAN/refmans/viridisLite/html/viridis.html">https://search.r-project.org/CRAN/refmans/viridisLite/html/viridis.html</a><br />
+</li>
+</ul>
+<p>Para escoger una paleta en particular y la cantidad de colores que
+queremos:<br />
+</p>
+<pre class="r watch-out"><code>library(viridis)
+viridis(10, option = &quot;mako&quot;)</code></pre>
+<pre><code>##  [1] &quot;#0B0405FF&quot; &quot;#28192FFF&quot; &quot;#3B2F5EFF&quot; &quot;#40498EFF&quot; &quot;#366A9FFF&quot; &quot;#348AA6FF&quot;
+##  [7] &quot;#38AAACFF&quot; &quot;#54C9ADFF&quot; &quot;#A0DFB9FF&quot; &quot;#DEF5E5FF&quot;</code></pre>
+<p>O también lo podemos llamar por letra de alfabeto
+correspondiente:<br />
+</p>
+<pre class="r watch-out"><code>viridis(10, option = &quot;G&quot;)</code></pre>
+<pre><code>##  [1] &quot;#0B0405FF&quot; &quot;#28192FFF&quot; &quot;#3B2F5EFF&quot; &quot;#40498EFF&quot; &quot;#366A9FFF&quot; &quot;#348AA6FF&quot;
+##  [7] &quot;#38AAACFF&quot; &quot;#54C9ADFF&quot; &quot;#A0DFB9FF&quot; &quot;#DEF5E5FF&quot;</code></pre>
+<pre class="r watch-out"><code>show_col(viridis(10, option = &quot;G&quot;))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="400px" /></p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="pal_jco" class="section level2">
+<h2><span style="background-color: #FFFF00">Pal_jco</span></h2>
+<p>Utiliza la libreria <strong>library(ggsci)</strong> y la función
+<em>pal_jco()</em>.<br />
+Hace referencia a: Journal of Clinical Oncology Color Palettes.<br />
+</p>
+<p>Solo tiene una paleta de color disponible: <em>default</em><br />
+Solo tiene <strong>10</strong> colores disponibles<br />
+</p>
+<pre class="r watch-out"><code>library(ggsci)
+pal_jco(palette = c(&quot;default&quot;))(10)</code></pre>
+<pre><code>##  [1] &quot;#0073C2FF&quot; &quot;#EFC000FF&quot; &quot;#868686FF&quot; &quot;#CD534CFF&quot; &quot;#7AA6DCFF&quot; &quot;#003C67FF&quot;
+##  [7] &quot;#8F7700FF&quot; &quot;#3B3B3BFF&quot; &quot;#A73030FF&quot; &quot;#4A6990FF&quot;</code></pre>
+<pre class="r watch-out"><code>show_col(pal_jco(palette = c(&quot;default&quot;))(10))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="400px" /></p>
+<pre class="r watch-out"><code>show_col(pal_jco(palette = c(&quot;default&quot;))(30))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-10-2.png" width="400px" /></p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="wesanderson" class="section level2">
+<h2><span style="background-color: #FFFF00">WesAnderson</span></h2>
+<p>Utiliza la libreria <strong>library(wesanderson)</strong><br />
+Obtener los nombres de las paletas: <strong>names()</strong>.<br />
+</p>
+<p>Se tiene que revisar la cantidad de colores, por cada paleta, ya que
+difieren.<br />
+Si queremos utilizar más del límite, debemos utilizar la opción:
+<em>type = c(“continuous)</em><br />
+</p>
+<p>Más información:</p>
+<ul>
+<li><a
+href="https://github.com/karthik/wesanderson">https://github.com/karthik/wesanderson</a></li>
+<li><a
+href="https://rforpoliticalscience.com/2020/07/26/make-wes-anderson-themed-graphs-with-wesanderson-package-in-r/">https://rforpoliticalscience.com/2020/07/26/make-wes-anderson-themed-graphs-with-wesanderson-package-in-r/</a></li>
+</ul>
+<pre class="r watch-out"><code>library(wesanderson)
+names(wes_palettes)</code></pre>
+<pre><code>##  [1] &quot;BottleRocket1&quot;  &quot;BottleRocket2&quot;  &quot;Rushmore1&quot;      &quot;Rushmore&quot;      
+##  [5] &quot;Royal1&quot;         &quot;Royal2&quot;         &quot;Zissou1&quot;        &quot;Darjeeling1&quot;   
+##  [9] &quot;Darjeeling2&quot;    &quot;Chevalier1&quot;     &quot;FantasticFox1&quot;  &quot;Moonrise1&quot;     
+## [13] &quot;Moonrise2&quot;      &quot;Moonrise3&quot;      &quot;Cavalcanti1&quot;    &quot;GrandBudapest1&quot;
+## [17] &quot;GrandBudapest2&quot; &quot;IsleofDogs1&quot;    &quot;IsleofDogs2&quot;</code></pre>
+<p>Seleccionando una paleta en general:</p>
+<pre class="r watch-out"><code>wes_palette(&quot;GrandBudapest1&quot;, n = 4)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="400px" /></p>
+<pre class="r watch-out"><code>wes_palette(&quot;GrandBudapest1&quot;, n = 10, type = c(&quot;continuous&quot;))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-12-2.png" width="400px" /></p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="paletas-disponibles" class="section level2">
+<h2><span style="background-color: #FFFF00">Paletas
+disponibles</span></h2>
+<p>Paleta de colores disponibles en R (<em>R base color
+palettes</em>).<br />
+Solo tiene disponible 5 paletas:<br />
+</p>
+<ul>
+<li>rainbow()</li>
+<li>heat.colors()</li>
+<li>terrain.colors()</li>
+<li>topo.colors()</li>
+<li>cm.colors()</li>
+</ul>
+<p>Cada paleta solo tiene 5 colores disponibles.<br />
+</p>
+<p>Más información:<br />
+</p>
+<ul>
+<li><a
+href="https://www.datanovia.com/en/blog/top-r-color-palettes-to-know-for-great-data-visualization/#:~:text=There%20are%205%20R%20base,cm.colors(n)%20.">https://www.datanovia.com/en/blog/top-r-color-palettes-to-know-for-great-data-visualization/#:~:text=There%20are%205%20R%20base,cm.colors(n)%20.</a></li>
+<li><a
+href="https://gist.github.com/biomystery/67884d5d010966bc6a5d">https://gist.github.com/biomystery/67884d5d010966bc6a5d</a></li>
+</ul>
+<pre class="r watch-out"><code>rainbow(5)</code></pre>
+<pre><code>## [1] &quot;#FF0000&quot; &quot;#CCFF00&quot; &quot;#00FF66&quot; &quot;#0066FF&quot; &quot;#CC00FF&quot;</code></pre>
+<pre class="r watch-out"><code>heat.colors(5)</code></pre>
+<pre><code>## [1] &quot;#FF0000&quot; &quot;#FF5500&quot; &quot;#FFAA00&quot; &quot;#FFFF00&quot; &quot;#FFFF80&quot;</code></pre>
+<p>Visualizando los colores</p>
+<pre class="r watch-out"><code>show_col(rainbow(5))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" width="400px" /></p>
+<pre class="r watch-out"><code>show_col(heat.colors(5))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-14-2.png" width="400px" /></p>
+<p><br />
+<br />
+</p>
+</div>
+</div>
+<div id="gráfico-de-violín" class="section level1">
+<h1>Gráfico de Violín</h1>
+<p><br />
+<br />
+</p>
+</div>
+<div id="gráfico-ridgeline-cresta" class="section level1">
+<h1>Gráfico Ridgeline (Cresta)</h1>
+<p><br />
+<br />
+</p>
+</div>
+<div id="gráfico-qq-plot" class="section level1">
+<h1>Gráfico QQ Plot</h1>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
