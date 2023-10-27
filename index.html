@@ -15,7 +15,7 @@
 
 <title>9ClaseGraficoMultivariado</title>
 
-<script src="index_files/header-attrs-2.11/header-attrs.js"></script>
+<script src="index_files/header-attrs-2.25/header-attrs.js"></script>
 <script src="index_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="index_files/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -31,7 +31,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="index_files/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="index_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="index_files/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="index_files/navigation-1.1/tabsets.js"></script>
@@ -65,6 +65,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -86,6 +87,9 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
 pre code {
   padding: 0;
 }
@@ -105,8 +109,8 @@ pre code {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -114,16 +118,9 @@ pre code {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -580,7 +577,75 @@ ancho para que encaje dentro del violín</li>
   geom_violin() +
   geom_boxplot(width = .2)</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-19-1.png" width="400px" /></p>
+<ul>
+<li>trim = FALSE : Agregando las colas</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, fill = Species)
+  ) +
+  geom_violin(trim = FALSE) +
+  geom_boxplot(width = .2)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-20-1.png" width="400px" /></p>
+<ul>
+<li>geom_dotplot() : Agregando puntos de la distribución</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, fill = Species)
+  ) +
+  geom_violin(trim = FALSE) +
+  geom_dotplot(binaxis=&#39;y&#39;, stackdir=&#39;center&#39;, dotsize=1)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" width="400px" /></p>
+<ul>
+<li>geom_jitter(): Agregando puntos de la distribución</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, fill = Species)
+  ) +
+  geom_violin(trim = FALSE) +
+  geom_jitter(width = 0.15)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" width="400px" /></p>
+<ul>
+<li>theme_classic(): Agregando tema básico</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, fill = Species)
+  ) +
+  geom_violin(trim = FALSE) +
+  geom_jitter(width = 0.15) +
+  theme_classic()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-23-1.png" width="400px" /></p>
+<ul>
+<li>Utilizando: <a
+href="https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/">https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/</a></li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, color = Species)
+  ) +
+  scale_color_brewer(palette = &quot;Dark2&quot;, guide = &quot;none&quot;) +
+  geom_violin(fill = &quot;gray80&quot;, linewidth = 1, alpha = .5)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-24-1.png" width="400px" /></p>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, color = Species)
+  ) +
+  scale_color_brewer(palette = &quot;Dark2&quot;, guide = &quot;none&quot;) +
+  geom_violin(fill = &quot;gray80&quot;, linewidth = 1, alpha = .5) +
+  geom_jitter(alpha = .25, width = .3) +
+  coord_flip()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-25-1.png" width="400px" /></p>
 <p><br />
+<br />
 <br />
 </p>
 </div>
@@ -612,6 +677,10 @@ href="https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.ht
 href="https://clauswilke.com/dataviz/boxplots-violins.html#boxplots-violins-vertical">https://clauswilke.com/dataviz/boxplots-violins.html#boxplots-violins-vertical</a></li>
 <li><a
 href="https://en.wikipedia.org/wiki/Ridgeline_plot">https://en.wikipedia.org/wiki/Ridgeline_plot</a></li>
+<li><a
+href="https://z3tt.github.io/beyond-bar-and-box-plots/">https://z3tt.github.io/beyond-bar-and-box-plots/</a></li>
+<li><a
+href="https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/">https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/</a></li>
 </ul>
 <pre class="r watch-out"><code>library(ggridges)</code></pre>
 <div id="para-un-solo-grupo" class="section level2">
@@ -625,7 +694,7 @@ href="https://en.wikipedia.org/wiki/Ridgeline_plot">https://en.wikipedia.org/wik
          mapping = aes(y = &quot;1&quot;, x = Sepal.Length)
          ) +
   geom_density_ridges()</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" width="400px" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-27-1.png" width="400px" /></p>
 </div>
 <div id="para-varios-grupos" class="section level2">
 <h2>Para varios grupos</h2>
@@ -639,7 +708,7 @@ href="https://en.wikipedia.org/wiki/Ridgeline_plot">https://en.wikipedia.org/wik
     mapping = aes(x = Sepal.Length, y = Species, fill = Species)
   ) +
   geom_density_ridges()</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" width="400px" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-28-1.png" width="400px" /></p>
 </div>
 <div id="agregando-otros-elementos-1" class="section level2">
 <h2>Agregando otros elementos</h2>
@@ -660,7 +729,7 @@ que se superpongan</li>
   ) +
   geom_density_ridges(scale = 0.9, alpha = 0.25) +
   scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-23-1.png" width="400px" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-29-1.png" width="400px" /></p>
 <ul>
 <li>jittered_points = TRUE : Agregar puntos a la distribución</li>
 </ul>
@@ -671,7 +740,7 @@ que se superpongan</li>
   ) +
   geom_density_ridges(scale = 0.9, alpha = 0.25, jittered_points = TRUE) +
   scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-24-1.png" width="400px" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-30-1.png" width="400px" /></p>
 <ul>
 <li>quantile_lines = TRUE: Para mostrar los cuantiles</li>
 </ul>
@@ -682,7 +751,18 @@ que se superpongan</li>
   ) +
   geom_density_ridges(scale = 0.9, quantile_lines = TRUE) +
   scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;))</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-25-1.png" width="400px" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-31-1.png" width="400px" /></p>
+<ul>
+<li>quantile_lines = TRUE: Para mostrar los cuantiles</li>
+</ul>
+<pre class="r watch-out"><code>iris %&gt;% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9, quantile_lines = TRUE, quantiles = 2) +
+  scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;))</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-32-1.png" width="400px" /></p>
 <ul>
 <li>facet_wrap(~Species): Para verlo por separado cada distribución</li>
 </ul>
@@ -694,7 +774,7 @@ que se superpongan</li>
   geom_density_ridges(scale = 0.9) +
   scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;)) + 
   facet_wrap(~Species)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-26-1.png" width="400px" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-33-1.png" width="400px" /></p>
 <ul>
 <li>theme_ridges(): Para darle un formato por defecto al gráfico</li>
 </ul>
@@ -706,7 +786,7 @@ que se superpongan</li>
   geom_density_ridges(scale = 0.9) +
   scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;)) +
   theme_ridges()</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-27-1.png" width="400px" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-34-1.png" width="400px" /></p>
 <ul>
 <li>theme_ridges(grid = FALSE): Para darle un formato por defecto al
 gráfico y quitarle las franjas</li>
@@ -719,7 +799,7 @@ gráfico y quitarle las franjas</li>
   geom_density_ridges(scale = 0.9) +
   scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;)) +
   theme_ridges(grid = FALSE)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-28-1.png" width="400px" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-35-1.png" width="400px" /></p>
 <ul>
 <li>theme_bw(): Para darle un formato por defecto al gráfico</li>
 </ul>
@@ -731,14 +811,63 @@ gráfico y quitarle las franjas</li>
   geom_density_ridges(scale = 0.9) +
   scale_fill_manual(values = c(&quot;red&quot;, &quot;orange&quot;, &quot;green&quot;)) +
   theme_bw()</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-29-1.png" width="400px" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-36-1.png" width="400px" /></p>
 <p><br />
+<br />
 <br />
 </p>
 </div>
 </div>
 <div id="gráfico-qq-plot" class="section level1">
 <h1>Gráfico QQ Plot</h1>
+<pre class="r watch-out"><code>my_data &lt;- ToothGrowth
+head(my_data)</code></pre>
+<pre><code>##    len supp dose
+## 1  4.2   VC  0.5
+## 2 11.5   VC  0.5
+## 3  7.3   VC  0.5
+## 4  5.8   VC  0.5
+## 5  6.4   VC  0.5
+## 6 10.0   VC  0.5</code></pre>
+<ul>
+<li>La variable va en:
+<ul>
+<li>sample = Variable numérica</li>
+</ul></li>
+<li>Se utiliza la función <em>stat_qq()</em></li>
+</ul>
+<pre class="r watch-out"><code>my_data %&gt;% 
+  ggplot(data = .,
+         mapping = aes(sample = len)) + 
+  stat_qq()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-38-1.png" width="400px" /></p>
+<p>Agregar linea</p>
+<pre class="r watch-out"><code>my_data %&gt;% 
+  ggplot(data = .,
+         mapping = aes(sample = len)) + 
+  stat_qq() +
+  stat_qq_line()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-39-1.png" width="400px" /></p>
+<p>Cambiar color</p>
+<pre class="r watch-out"><code>my_data %&gt;% 
+  ggplot(data = .,
+         mapping = aes(sample = len)) + 
+  stat_qq(col = &quot;red&quot;) +
+  stat_qq_line()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-40-1.png" width="400px" /></p>
+<p><br />
+<br />
+</p>
+<p>Utilizando <em>library(qqplotr)</em></p>
+<pre class="r watch-out"><code>library(qqplotr)</code></pre>
+<p>Llamando a la imagen (Pero por el momento no está disponible)</p>
+<pre class="r watch-out"><code>my_data %&gt;% 
+  ggplot(data = .,
+         mapping = aes(sample = len)) + 
+  stat_qq_band() +
+  stat_qq_line() +
+  stat_qq_point()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-42-1.png" width="400px" /></p>
 </div>
 
 

@@ -327,7 +327,86 @@ iris %>%
   geom_boxplot(width = .2)
 ```
 
+* trim = FALSE : Agregando las colas
 
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, fill = Species)
+  ) +
+  geom_violin(trim = FALSE) +
+  geom_boxplot(width = .2)
+```
+
+* geom_dotplot() : Agregando puntos de la distribución
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, fill = Species)
+  ) +
+  geom_violin(trim = FALSE) +
+  geom_dotplot(binaxis='y', stackdir='center', dotsize=1)
+```
+
+* geom_jitter(): Agregando puntos de la distribución
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, fill = Species)
+  ) +
+  geom_violin(trim = FALSE) +
+  geom_jitter(width = 0.15)
+```
+
+* theme_classic(): Agregando tema básico
+
+```{r}
+
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, fill = Species)
+  ) +
+  geom_violin(trim = FALSE) +
+  geom_jitter(width = 0.15) +
+  theme_classic()
+```
+
+* Utilizando: [https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/](https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/)
+
+```{r}
+
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, color = Species)
+  ) +
+  scale_color_brewer(palette = "Dark2", guide = "none") +
+  geom_violin(fill = "gray80", linewidth = 1, alpha = .5)
+```
+
+
+```{r}
+
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Species, y = Sepal.Length, color = Species)
+  ) +
+  scale_color_brewer(palette = "Dark2", guide = "none") +
+  geom_violin(fill = "gray80", linewidth = 1, alpha = .5) +
+  geom_jitter(alpha = .25, width = .3) +
+  coord_flip()
+```
+
+
+
+\
 \
 \
 
@@ -348,6 +427,9 @@ Más información:\
 * [https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html#:~:text=Ridgeline%20plots%20are%20partially%20overlapping,distributions%20over%20time%20or%20space](https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html#:~:text=Ridgeline%20plots%20are%20partially%20overlapping,distributions%20over%20time%20or%20space)
 * [https://clauswilke.com/dataviz/boxplots-violins.html#boxplots-violins-vertical](https://clauswilke.com/dataviz/boxplots-violins.html#boxplots-violins-vertical)
 * [https://en.wikipedia.org/wiki/Ridgeline_plot](https://en.wikipedia.org/wiki/Ridgeline_plot)
+* [https://z3tt.github.io/beyond-bar-and-box-plots/](https://z3tt.github.io/beyond-bar-and-box-plots/)
+* [https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/](https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/)
+
 
 ```{r}
 library(ggridges)
@@ -426,6 +508,18 @@ iris %>%
   scale_fill_manual(values = c("red", "orange", "green"))
 ```
 
+* quantile_lines = TRUE: Para mostrar los cuantiles
+
+```{r}
+iris %>% 
+  ggplot(
+    data = .,
+    mapping = aes(x = Sepal.Length, y = Species, fill = Species)
+  ) +
+  geom_density_ridges(scale = 0.9, quantile_lines = TRUE, quantiles = 2) +
+  scale_fill_manual(values = c("red", "orange", "green"))
+```
+
 * facet_wrap(~Species): Para verlo por separado cada distribución
 
 ```{r}
@@ -481,8 +575,64 @@ iris %>%
 
 \
 \
+\
 
 # Gráfico QQ Plot
 
+```{r}
+my_data <- ToothGrowth
+head(my_data)
+```
 
+* La variable va en:
+  + sample = Variable numérica
+* Se utiliza la función *stat_qq()*
+
+
+```{r}
+my_data %>% 
+  ggplot(data = .,
+         mapping = aes(sample = len)) + 
+  stat_qq()
+```
+
+Agregar linea
+
+```{r}
+my_data %>% 
+  ggplot(data = .,
+         mapping = aes(sample = len)) + 
+  stat_qq() +
+  stat_qq_line()
+```
+
+Cambiar color
+
+```{r}
+my_data %>% 
+  ggplot(data = .,
+         mapping = aes(sample = len)) + 
+  stat_qq(col = "red") +
+  stat_qq_line()
+```
+
+\
+\
+
+Utilizando *library(qqplotr)*
+
+```{r}
+library(qqplotr)
+```
+
+Llamando a la imagen (Pero por el momento no está disponible)
+
+```{r}
+my_data %>% 
+  ggplot(data = .,
+         mapping = aes(sample = len)) + 
+  stat_qq_band() +
+  stat_qq_line() +
+  stat_qq_point()
+```
 
